@@ -15,12 +15,12 @@
                         <div class="w-1/2">left side</div>
                         <div class="w-1/2">
                             <div class="p-2 rounded shadow">
-                                <h3 class="mt-2 text-xl text-center text-indigo-500">Visited Coutry</h3>
+                                <h3 class="mt-2 text-xl text-center text-indigo-500">Visited Country</h3>
                                 <div class="flex p-6 bg-white border-b border-gray-200">
                                    <div class="flex">
                                         <Select2
                                         class=" w-96"
-                                        v-model="SelectedVisitedCuntry"
+                                        v-model="SelectedVisitedCountry"
                                         :settings="{
                                             width:'100%',
                                             ajax: {
@@ -29,15 +29,15 @@
                                             },
                                         }"
 
-                                        @select="VisitedCoutrySelected($event)"
+                                        @select="VisitedCountrySelected($event)"
                                         />
                                         <a href="javascript:void(0);"
                                         @click="addVisitedCountry"
-                                        class="px-1 ml-3 text-xl font-semibold text-white "><img src="https://img.icons8.com/ios/28/000000/plus--v2.png"/></a>
+                                        class="px-1 ml-3 text-xl font-semibold text-white bg-green-400 hover:bg-green-500  rounded-xl">add</a>
                                     </div>
 
-                                    <div v-for="vr in visitedCountries" :key="vr.id0" class="mt-5 ">
-                                        <span class="block w-full pt-3 mb-1 border-b-2">{{ vr.name }}</span>
+                                    <div v-for="vc in visitedCountries" :key="vc.id" class="mt-5 ">
+                                        <span class="block w-full pt-3 mb-1 border-b-2">{{ vc.name }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -60,9 +60,9 @@
                                         />
                                         <a href="javascript:void(0);"
                                         @click="addVisitedCountry"
-                                        class="px-1 ml-3 text-xl font-semibold text-white "><img src="https://img.icons8.com/ios/28/000000/plus--v2.png"/></a>
+                                        class="px-1 ml-3 text-xl font-semibold text-white  bg-green-400 hover:bg-green-500 rounded-xl">add</a>
                                     </div>
-                                     <div v-for="ctv in countriesToVisit" :key="ctv.id0" class="mt-5 ">
+                                     <div v-for="ctv in countriesToVisit" :key="ctv.id" class="mt-5 ">
                                         <span class="block w-full pt-3 mb-1 border-b-2">{{ ctv.name }}</span>
                                     </div>
                                 </div>
@@ -91,37 +91,37 @@ export default {
     },
     data() {
         return {
-            SelectedVisitedCuntry: '',
+            SelectedVisitedCountry: '',
             SelectedCountryToVisit:'',
             visitedCountries: [],
             countriesToVisit:[],
         }
     },
     methods: {
-        VisitedCoutrySelected({id, text}){
+        VisitedCountrySelected({id, text}){
             // console.log({id, text})
         },
         CountryToVisitSelected({id, text}){
             // console.log({id, text})
         },
-        getVisitedCoutry(){
+        getVisitedCountry(){
             axios.get('/api/countries/visited')
             .then((response) => {
-                this.visitedCoutries = response.data;
+                this.visitedCountries = response.data;
             });
         },
-        getToVisitCoutry(){
+        getToVisitCountry(){
             axios.get('/api/countries/tovisit')
                 .then((response) => {
                     this.countriesToVisit = response.data;
                 });
         },
         addVisitedCountry(){
-            if (this.SelectedVisitedCuntry !== '') {
+            if (this.SelectedVisitedCountry !== '') {
                 axios.post('/api/add-visited-country',{
-                    countryID: this.SelectedVisitedCuntry
+                    countryID: this.SelectedVisitedCountry
                 }).then((response) => {
-                    this.getVisitedCoutry();
+                    this.getVisitedCountry();
                 }).catch(function(error){
                     console.log(error)
                 })
@@ -131,8 +131,8 @@ export default {
         }
     },
     created(){
-        this.getVisitedCoutry();
-        this.getToVisitCoutry();
+        this.getVisitedCountry();
+        this.getToVisitCountry();
     }
 }
 </script>
